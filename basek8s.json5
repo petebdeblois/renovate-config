@@ -138,12 +138,12 @@
   enabledManagers: ["flux", "kubernetes", "kustomize"],
   flux: {
     fileMatch: [
-      "(apps|core|infrastructure|crds|clusters)/(production|development)/.+.yaml$",
+      "(apps|core|infrastructure|crds|clusters)/.+.yaml$",
     ],
   },
   kubernetes: {
     fileMatch: [
-      "(apps|core|infrastructure|crds|clusters)/(production|development)/.+.yaml$",
+      "(apps|core|infrastructure|crds|clusters)/.+.yaml$",
     ],
   },
   kustomize: {
