@@ -1,7 +1,6 @@
-
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
     "config:recommended",
     ":autodetectPinVersions",
     ":automergePatch",
@@ -23,138 +22,138 @@
     ":disablePeerDependencies",
     "schedule:automergeDaily"
   ],
-  packageRules: [
+  "packageRules": [
     {
-      matchManagers: [
-        'custom.regex',
+      "matchManagers": [
+        "custom.regex"
       ],
-      matchFileNames: [
-        'vendir.yml',
+      "matchFileNames": [
+        "vendir.yml"
       ],
-      addLabels: [
-        'bump-from/vendir',
-      ],
+      "addLabels": [
+        "bump-from/vendir"
+      ]
     },
     {
-      description: 'Get distinct branches for each minor, e.g. 1.22.x and 1.23.x. See https://docs.renovatebot.com/presets-default/#separatepatchreleases and https://docs.renovatebot.com/faq/#separate-patch-releases-from-minor-releases',
-      matchPackageNames: [
-        'k3s-io/k3s',
+      "description": "Get distinct branches for each minor, e.g. 1.22.x and 1.23.x. See https://docs.renovatebot.com/presets-default/#separatepatchreleases and https://docs.renovatebot.com/faq/#separate-patch-releases-from-minor-releases",
+      "matchPackageNames": [
+        "k3s-io/k3s"
       ],
-      separateMinorPatch: true,
-      versioning: 'semver',
-      //separateMultipleMinor: true, // Pending merge of https://github.com/renovatebot/renovate/pull/24538 to be effective
+      "separateMinorPatch": true,
+      "versioning": "semver"
     },
     {
-      description: 'Only ask for patch updates for k8s releases, ie. disable getting minor updates',
-      matchFileNames: [
-        'vendir.yml',
+      "description": "Only ask for patch updates for k8s releases, ie. disable getting minor updates",
+      "matchFileNames": [
+        "vendir.yml"
       ],
-      //See https://github.com/renovatebot/renovate/discussions/15861
-      matchUpdateTypes: [
-        'minor',
+      "matchUpdateTypes": [
+        "minor"
       ],
-      enabled: false,
+      "enabled": false
     },
     {
-      description: 'Auto-merge patch releases, e.g. from 1.25.1 to 1.25.2',
-      matchPackageNames: [
-        'k3s-io/k3s',
-        'kubernetes/kubernetes',
+      "description": "Auto-merge patch releases, e.g. from 1.25.1 to 1.25.2",
+      "matchPackageNames": [
+        "k3s-io/k3s",
+        "kubernetes/kubernetes"
       ],
-      //see https://docs.renovatebot.com/key-concepts/automerge/#automerge-non-major-updates
-      matchUpdateTypes: [
-        'patch',
+      "matchUpdateTypes": [
+        "patch"
       ],
-      matchCurrentVersion: '!/-rc/',
-      automerge: true,
-      //see https://docs.renovatebot.com/key-concepts/automerge/#absence-of-tests
-      ignoreTests: true,
+      "matchCurrentVersion": "!/-rc/",
+      "automerge": true,
+      "ignoreTests": true
     },
     {
-      description: 'Add common labels',
-      matchDepPatterns: [
-        '*',
+      "description": "Add common labels",
+      "matchDepPatterns": [
+        "*"
       ],
-      addLabels: [
-        'datasource/{{datasource}}',
-        'depName/{{depNameSanitized}}',
-        'manager/{{manager}}',
-        'hasReleaseNotes/{{hasReleaseNotes}}',
-        'target/{{baseBranch}}', // To easily filter PR on base branch, like all PR related to k3s 1.25
-      ],
+      "addLabels": [
+        "datasource/{{datasource}}",
+        "depName/{{depNameSanitized}}",
+        "manager/{{manager}}",
+        "hasReleaseNotes/{{hasReleaseNotes}}",
+        "target/{{baseBranch}}"
+      ]
     },
     {
-      description: 'Kubectl: Get distinct branches for each minor, e.g. 1.22.x and 1.23.x. See https://docs.renovatebot.com/presets-default/#separatepatchreleases and https://docs.renovatebot.com/faq/#separate-patch-releases-from-minor-releases',
-      matchPackageNames: [
-        'kubernetes/kubernetes',
+      "description": "Kubectl: Get distinct branches for each minor, e.g. 1.22.x and 1.23.x. See https://docs.renovatebot.com/presets-default/#separatepatchreleases and https://docs.renovatebot.com/faq/#separate-patch-releases-from-minor-releases",
+      "matchPackageNames": [
+        "kubernetes/kubernetes"
       ],
-      separateMinorPatch: true,
-      addLabels: [
-        'depName/kubernetes-kubectl', //override common labels for kubectl, as we have to scan kubernetes releases
-      ],
-      //separateMultipleMinor: true, // Pending merge of https://github.com/renovatebot/renovate/pull/24538 to be effective
-    },
+      "separateMinorPatch": true,
+      "addLabels": [
+        "depName/kubernetes-kubectl"
+      ]
+    }
   ],
-   customManagers: [
+  "customManagers": [
     {
-      customType: 'regex',
-      description: 'https://regex101.com/r/ms9hZL/1 for matchstring and https://regex101.com/r/NVqoci/1 for version',
-      fileMatch: [
-        'vendir.yml$',
+      "customType": "regex",
+      "description": "https://regex101.com/r/ms9hZL/1 for matchstring and https://regex101.com/r/NVqoci/1 for version",
+      "fileMatch": [
+        "vendir.yml$"
       ],
-      matchStrings: [
-        ' +githubRelease:\\n +slug: (?<depName>[a-z0-9\\.\\/\\-]*?)\\n +tag: (?<currentValue>[a-z0-9\\.\\/\\-\\+]*?) *\\n',
+      "matchStrings": [
+        " +githubRelease:\\n +slug: (?<depName>[a-z0-9\\.\\/\\-]*?)\\n +tag: (?<currentValue>[a-z0-9\\.\\/\\-\\+]*?) *\\n"
       ],
-      datasourceTemplate: 'github-releases',
-      versioningTemplate: 'regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<build>[a-z0-9]+))?(\\+(?<compatibility>[a-z0-9]+[a-z])(?<revision>[0-9]+))?$', // https://regex101.com/r/C1dICM/1
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<build>[a-z0-9]+))?(\\+(?<compatibility>[a-z0-9]+[a-z])(?<revision>[0-9]+))?$"
     },
     {
-      customType: 'regex',
-      fileMatch: [
-        'vendir.yml$',
+      "customType": "regex",
+      "fileMatch": [
+        "vendir.yml$"
       ],
-      matchStrings: [
-        ' +git:\\n +url: https:\\/\\/github\\.com\\/(?<depName>[a-z0-9\\.\\/\\-:]*?)\\n +ref: (?<currentValue>[a-z0-9\\.\\/\\-\\+]*?) *\\n',
+      "matchStrings": [
+        " +git:\\n +url: https:\\/\\/github\\.com\\/(?<depName>[a-z0-9\\.\\/\\-:]*?)\\n +ref: (?<currentValue>[a-z0-9\\.\\/\\-\\+]*?) *\\n"
       ],
-      datasourceTemplate: 'github-tags',
-      versioningTemplate: 'regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$',
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$"
     },
     {
-      customType: 'regex',
-      fileMatch: [
-        '.github/workflows/.*\\.yml',
+      "customType": "regex",
+      "fileMatch": [
+        ".github/workflows/.*\\.yml"
       ],
-      matchStrings: [
-        // For GitHub workflows: https://regex101.com/r/wjGoU0/2
-        'repo: (?<depName>[\\w\\d\\//\\-\\_]+)\\n\\s*tag:[\\s*|=]??\\"?v(?<currentValue>[\\w\\d\\/\\-\\.\\_]+)\\"?',
+      "matchStrings": [
+        "repo: (?<depName>[\\w\\d\\//\\-\\_]+)\\n\\s*tag:[\\s*|=]??\\\"?v(?<currentValue>[\\w\\d\\/\\-\\.\\_]+)\\\"?"
       ],
-      versioningTemplate: 'regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$',
-      extractVersionTemplate: '^v?(?<version>.*)$',
-      datasourceTemplate: 'github-tags',
-    },
+      "versioningTemplate": "regex:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$",
+      "extractVersionTemplate": "^v?(?<version>.*)$",
+      "datasourceTemplate": "github-tags"
+    }
   ],
-  prConcurrentLimit: 3,
-  rebaseWhen: "auto",
-  enabledManagers: ["flux", "kubernetes", "kustomize"],
-  flux: {
-    fileMatch: [
-      "(apps|core|infrastructure|crds|clusters)/.+.yaml$",
-    ],
+  "prConcurrentLimit": 3,
+  "rebaseWhen": "auto",
+  "enabledManagers": [
+    "flux",
+    "kubernetes",
+    "kustomize"
+  ],
+  "flux": {
+    "fileMatch": [
+      "(apps|core|infrastructure|crds|clusters)/.+.yaml$"
+    ]
   },
-  kubernetes: {
-    fileMatch: [
-      "(apps|core|infrastructure|crds|clusters)/.+.yaml$",
-    ],
+  "kubernetes": {
+    "fileMatch": [
+      "(apps|core|infrastructure|crds|clusters)/.+.yaml$"
+    ]
   },
-  kustomize: {
-    fileMatch: ["(^|/)kustomization\\.ya?ml$"],
+  "kustomize": {
+    "fileMatch": [
+      "(^|/)kustomization\\.ya?ml$"
+    ]
   },
-  ignoreDeps: [
+  "ignoreDeps": [
     "coveo-aura-worker",
     "docker.registry.private/coveo/casesrca-backend",
     "docker.registry.private/coveo/coveo-aura-app",
     "docker.registry.private/coveo/nomination-and-swarm",
     "docker.registry.private/coveo/troubleshooting-paths-app",
     "docker.registry.private/coveo/coveo-aura-worker"
-  ],
+  ]
 }
