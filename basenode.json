@@ -10,7 +10,7 @@
     ":prImmediately",
     ":rebaseStalePrs",
     ":separatePatchReleases",
-    ":timezone(Australia/Melbourne)",
+    ":timezone(America/Montreal",
     "helpers:disableTypesNodeMajor",
     "helpers:pinGitHubActionDigests",
     "npm:unpublishSafe",
