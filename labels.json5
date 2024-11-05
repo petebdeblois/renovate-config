@@ -25,5 +25,21 @@
       matchDatasources: ["galaxy", "galaxy-collection"],
       addLabels: ["renovate/ansible"],
     },
+    {
+      matchPaths: ["**/cluster/**"],
+      addLabels: ["Cluster"],
+    },
+    {
+      matchPaths: ["**/apps/**"],
+      addLabels: ["Apps"],
+    },
+    {
+      matchPaths: ["**/infrastructure/**"],
+      addLabels: ["Infra"],
+    },
+    {
+      matchPaths: ["**/crds/**"],
+      addLabels: ["CRDs"],
+    },
   ],
 }
