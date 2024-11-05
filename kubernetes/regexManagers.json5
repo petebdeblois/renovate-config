@@ -1,0 +1,45 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customManagers: [
+    {
+      customType: "regex",
+      description: "Cloudnative Postgres container",
+      fileMatch: [
+        "kubernetes/main/apps/databases/cloudnative-pg/clusters/.+\\.yaml$",
+      ],
+      matchStrings: ["imageName: (?<depName>.*?):(?<currentValue>.*)"],
+      datasourceTemplate: "docker",
+    },
+    {
+      customType: "regex",
+      description: "Process Kubernetes versions",
+      fileMatch: ["infrastructure/talos/talconfig.yaml"],
+      matchStrings: ["kubernetesVersion: (?<currentValue>.*)"],
+      depNameTemplate: "ghcr.io/siderolabs/kubelet",
+      datasourceTemplate: "docker",
+    },
+    {
+      customType: "regex",
+      description: "Process Talos versions",
+      fileMatch: [
+        "infrastructure/talos/talconfig.yaml",
+        ".taskfiles/tools/taskfile.yaml",
+      ],
+      matchStrings: [
+        "talosVersion: (?<currentValue>.*)",
+        "factory.talos.dev/image/[a-z0-9]*/(?<currentValue>.*)/metal",
+      ],
+      depNameTemplate: "ghcr.io/siderolabs/installer",
+      datasourceTemplate: "docker",
+    },
+    {
+      customType: "regex",
+      description: "Process CLI versions",
+      fileMatch: [".taskfiles/.+\\.yaml$"],
+      matchStrings: [
+        "github.com/(?<depName>.*?)/releases/download/(?<currentValue>[a-z0-9.]*)",
+      ],
+      datasourceTemplate: "github-releases",
+    },
+  ],
+}

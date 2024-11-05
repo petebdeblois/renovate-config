@@ -1,0 +1,109 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Flux Group",
+      groupName: "Flux",
+      matchPackagePatterns: ["^flux", "^ghcr.io/fluxcd/"],
+      matchDatasources: ["docker", "github-tags"],
+      versioning: "semver",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "Cert manager chart and CRDs",
+      matchDatasources: ["helm", "github-releases", "docker"],
+      matchPackageNames: [
+        "cert-manager",
+        "cert-manager/cert-manager",
+        "quay.io/jetstack/cert-manager-controller",
+      ],
+      groupName: "cert-manager",
+      additionalBranchPrefix: "",
+      separateMinorPatch: true,
+    },
+    {
+      description: "Rook/Ceph chart & images",
+      matchDatasources: ["helm", "docker", "github-releases"],
+      matchPackagePatterns: ["^rook"],
+      groupName: "rook-ceph-suite",
+      additionalBranchPrefix: "",
+      separateMinorPatch: true,
+    },
+    {
+      description: "Talos releases",
+      matchDatasources: ["docker", "github-releases"],
+      matchPackageNames: ["ghcr.io/siderolabs/installer", "siderolabs/talos"],
+      groupName: "siderolabs/talos",
+      additionalBranchPrefix: "",
+      separateMinorPatch: true,
+    },
+    {
+      description: "Node feature discovery docker, chart and CRDs",
+      matchDatasources: ["helm", "kustomization", "docker"],
+      matchPackageNames: [
+        "node-feature-discovery",
+        "kubernetes-sigs/node-feature-discovery",
+        "k8s.gcr.io/nfd/node-feature-discovery",
+      ],
+      groupName: "node-feature-discovery",
+      additionalBranchPrefix: "",
+      separateMinorPatch: true,
+    },
+    {
+      description: "Immich Group",
+      groupName: "Immich",
+      matchPackagePatterns: ["immich"],
+      matchDatasources: ["docker"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: ["Actions Runner Controller Group"],
+      groupName: "Actions Runner Controller",
+      matchPackagePatterns: [
+        "gha-runner-scale-set-controller",
+        "gha-runner-scale-set",
+      ],
+      matchDatasources: ["docker", "helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: ["1Password Connect Group"],
+      groupName: "1Password Connnect",
+      matchPackagePatterns: ["1password/connect"],
+      matchDatasources: ["docker"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: ["EMQX Operator Group"],
+      groupName: "EMQX Operator",
+      matchPackagePatterns: ["ghcr.io/emqx/emqx-operator", "emqx-operator"],
+      matchDatasources: ["docker", "helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: ["Mastodon Group"],
+      groupName: "Mastodon",
+      matchPackagePatterns: ["docker.io/bitnami/mastodon", "mastodon"],
+      matchDatasources: ["docker", "helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+  ],
+}
